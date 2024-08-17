@@ -9,8 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Dictionary;
 import java.util.List;
 
+import appJam.hackerton.appjam_27.domain.time.dto.req.TimeReq;
+import appJam.hackerton.appjam_27.domain.time.entity.TimeEntity;
+import appJam.hackerton.appjam_27.domain.time.repository.TimeRepository;
+import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
+import appJam.hackerton.appjam_27.global.response.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,31 +29,28 @@ public class TimeService {
     private final TimeRepository timeRepository;
     private final UserRepository userRepository;
 
-    public Time saveTime(Long userId, Integer userTime) {
-        UserEntity user = userRepository.findById(userId);
+    public Response saveTime(TimeReq timeReq) {
+        UserEntity user = userRepository.findByUserId(timeReq.userId())
+                .orElseThrow(NotFoundUserException::new);
 
-        Time time = new Time(user, userTime);
-        return timeRepository.save(time);
+        TimeEntity timeEntity = TimeEntity.builder()
+                .userId(user)
+                .userTime(timeReq.time())
+                .build();
+
+        timeRepository.save(timeEntity);
+
+        return Response.of(HttpStatus.OK, "성공");
     }
 
     // #endregions
 
-    // #region 랭크 내림차순에 따른 유저 랭크정의
 
-    public UserEntity setTime(Integer userTime) {
 
-        // 금일 날짜 일요일? 확인
-        if(LocalDate.now().getDayOfWeek() == "SUNDAY")
-        {
-            List<UserEntity> users = userRepository.userId();
-            List<UserEntity> ranking = userRepository.findAllOrderByRankDesc(userTime);
-
-            foreach(Long i : users) ranking(i);
-            return ranking;
-        }
-        else return 0;
-
+    // #region 평균 사용시간에 따른 유저 순위 정렬
+    public List<UserEntity> setTime() {
+        List<UserEntity> userRanking = userRepository.findAllOrderByCalculatedTimeDesc();
+        return userRanking;
     }
-
     // #endregion
 }
