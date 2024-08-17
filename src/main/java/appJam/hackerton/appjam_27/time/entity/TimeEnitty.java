@@ -1,7 +1,6 @@
-package appJam.hackerton.appjam_27.domain.time.entity;
+package appJam.hackerton.appjam_27.time.entity;
 
-import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
-import appJam.hackerton.appjam_27.global.common.entity.BaseTimeEntity;
+import appJam.hackerton.appjam_27.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "tbl_time")
 @DynamicUpdate
 @AllArgsConstructor
-public class TimeEntity extends BaseTimeEntity {
+public class TimeEntity {
     @Id
     @Column(name = "time_id")
     private Long timeId;
