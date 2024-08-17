@@ -7,10 +7,12 @@ import appJam.hackerton.appjam_27.domain.friend.enums.FriendState;
 import appJam.hackerton.appjam_27.domain.friend.repository.FriendRepository;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
+import appJam.hackerton.appjam_27.global.exception.custom.friend.NotFoundFriendException;
 import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
 import appJam.hackerton.appjam_27.global.response.Response;
 import appJam.hackerton.appjam_27.global.response.ResponseData;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -46,14 +48,45 @@ public class FriendService {
 
         List<FriendEntity> friendEntityList = friendRepository.findAllByUserEntity2(userEntity);
 
-        List<UserEntity> userEntityList = new ArrayList<>();
+        List<FriendRes> friendResList = new ArrayList<>();
         for(FriendEntity friendEntity:friendEntityList){
-            userEntityList.add(userRepository.findByUserId(friendEntity.getUserEntity().getUserId())
-                    .orElseThrow(NotFoundUserException::new));
+            friendResList.add(FriendRes.of(userRepository.findByUserId(friendEntity.getUserEntity().getUserId())
+                    .orElseThrow(NotFoundUserException::new)));
         }
-//        FriendRes.of(userEntity.getUserId());
 
-        return null;
+        return ResponseData.of(HttpStatus.OK, "조회 성공", friendResList);
+    }
+
+    public Response allow(String targetId, String userId){
+        UserEntity targetEntity = userRepository.findByUserId(targetId)
+                .orElseThrow(NotFoundUserException::new);
+
+        UserEntity userEntity = userRepository.findByUserId(userId)
+                .orElseThrow(NotFoundUserException::new);
+
+        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity)
+                .orElseThrow(() -> NotFoundFriendException.EXCEPTION);
+
+        friendEntity.setFriendState(FriendState.ALLOW);
+
+        friendRepository.save(friendEntity);
+        return Response.of(HttpStatus.OK, "수락 성공");
+    }
+
+    public Response detected(String targetId, String userId){
+        UserEntity targetEntity = userRepository.findByUserId(targetId)
+                .orElseThrow(NotFoundUserException::new);
+
+        UserEntity userEntity = userRepository.findByUserId(userId)
+                .orElseThrow(NotFoundUserException::new);
+
+        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity)
+                .orElseThrow(() -> NotFoundFriendException.EXCEPTION);
+
+        friendEntity.setFriendState(FriendState.DETECTED);
+
+        friendRepository.save(friendEntity);
+        return Response.of(HttpStatus.OK, "거절 성공");
     }
 
 }
