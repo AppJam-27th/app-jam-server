@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,7 +44,14 @@ public class FriendService {
         UserEntity userEntity = userRepository.findByUserId(targetId)
                 .orElseThrow(NotFoundUserException::new);
 
+        List<FriendEntity> friendEntityList = friendRepository.findAllByUserEntity2(userEntity);
 
+        List<UserEntity> userEntityList = new ArrayList<>();
+        for(FriendEntity friendEntity:friendEntityList){
+            userEntityList.add(userRepository.findByUserId(friendEntity.getUserEntity().getUserId())
+                    .orElseThrow(NotFoundUserException::new));
+        }
+//        FriendRes.of(userEntity.getUserId());
 
         return null;
     }
