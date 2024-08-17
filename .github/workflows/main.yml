@@ -1,0 +1,66 @@
+name: CI/CD using github actions & docker
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: make application.yml
+        run: |
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.APPLICATION }}" > ./application.yml
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: set chmod
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: List build/libs contents
+        run: ls -la build/libs
+
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/sopo .
+          docker push ${{ secrets.DOCKER_USERNAME }}/sopo:latest
+
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@master
+        id: deploy-prod
+        with:
+          host: ${{ secrets.HOST_PROD }}
+          username: ubuntu
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          envs: GITHUB_SHA
+          script: |
+            script: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker stop sopo
+            docker rm sopo
+            sudo docker pull redis:latest
+            sudo docker run -d --name redis -p 6379:6379 --network redis-network redis:latest
+            sudo docker rm -f sopo_redis sopo_app
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/sopo:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/sopo:latest
+            sudo docker run -d --name sopo_redis_new redis:latest
+            docker run -d -p 80:8080 --name sopo ${{ secrets.DOCKER_USERNAME }}/sopo:latest
