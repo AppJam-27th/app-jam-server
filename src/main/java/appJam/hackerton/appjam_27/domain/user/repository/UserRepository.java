@@ -20,5 +20,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "ORDER BY SUM(t.user_time) / COUNT(t) DESC")
     List<UserEntity> findAllOrderByCalculatedTimeDesc();
 
+<<<<<<< HEAD
     List<UserEntity> findByUserName(String username);
 }
+=======
+}
+>>>>>>> 6507f834dd22652fbc1578e79fe9c8c8b1122efa
