@@ -64,7 +64,8 @@ public class FriendService {
         UserEntity userEntity = userRepository.findByUserId(userId)
                 .orElseThrow(NotFoundUserException::new);
 
-        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity);
+        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity)
+                .orElseThrow(() -> NotFoundFriendException.EXCEPTION);
 
         friendEntity.setFriendState(FriendState.ALLOW);
 
@@ -79,7 +80,8 @@ public class FriendService {
         UserEntity userEntity = userRepository.findByUserId(userId)
                 .orElseThrow(NotFoundUserException::new);
 
-        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity);
+        FriendEntity friendEntity = friendRepository.findFriendsByTargetIdAndUserId(targetEntity, userEntity)
+                .orElseThrow(() -> NotFoundFriendException.EXCEPTION);
 
         friendEntity.setFriendState(FriendState.DETECTED);
 
