@@ -18,13 +18,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @DynamicUpdate
 @AllArgsConstructor
 public class UserEntity {
-    @Id
+    @ManyToOne(fetch = FetchType.Eager)
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "friend_state")
     private String friendState;
 
+    @ManyToOne(fetch = FetchType.Eager) 
     @Column(name = "user_id2")
-    private String userId2;
+    private Long userId2;
 }

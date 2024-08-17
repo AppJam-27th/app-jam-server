@@ -20,11 +20,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserEntity {
     @Id
     @Column(name = "time_id")
-    private String timeId;
+    private Long timeId;
 
+    @ManyToOne(fetch = FetchType.Eager)
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "user_time")
-    private String userTime;
+    private Integer userTime;
 }

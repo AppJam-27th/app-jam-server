@@ -20,11 +20,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserEntity {
     @Id
     @Column(name = "group_to_userId")
-    private String groupToUser;
+    private Long groupToUser;
 
+    @ManyToOne(fetch = FetchType.Eager)
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
+    @ManyToOne(fetch = FetchType.Eager)
     @Column(name = "group_id")
-    private String groupId;
+    private Long groupId;
 }

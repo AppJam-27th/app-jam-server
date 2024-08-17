@@ -1,3 +1,4 @@
+
 package appJam.hackerton.appjam_27.user.entity;
 
 import jakarta.persistence.*;
@@ -19,9 +20,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 public class UserEntity {
     @Id
-    @Column(name = "group_id")
-    private String groupId;
+    @Column(name = "file_id")
+    private String fileId;
 
-    @Column(name = "group_name")
-    private String groupName;
+    @ManyToOne(fetch = FetchType.Eager) 
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "file_size")
+    private String fileSize;
 }
+

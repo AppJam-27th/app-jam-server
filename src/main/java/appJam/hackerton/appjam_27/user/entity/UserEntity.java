@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserEntity {
     @Id
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "user_name")
     private String userName;
@@ -29,5 +29,5 @@ public class UserEntity {
     private String userPwd;
 
     @Column(name = "user_rank")
-    private String userRank;
+    private Integer userRank;
 }

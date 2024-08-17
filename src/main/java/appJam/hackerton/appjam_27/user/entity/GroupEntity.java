@@ -19,15 +19,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 public class UserEntity {
     @Id
-    @Column(name = "file_id")
-    private String fileId;
+    @Column(name = "group_id")
+    private Long groupId;
 
-    @Column(name = "user_id")
-    private String userId;
-
-    @Column(name = "file_name")
-    private String fileName;
-
-    @Column(name = "file_size")
-    private String fileSize;
+    @Column(name = "group_name")
+    private String groupName;
 }
