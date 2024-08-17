@@ -5,7 +5,7 @@ import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 public record FriendRes(
         String userId,
         String userName,
-        Integer userRank,
+        Integer userRank
 //        Long userTime
 
 ) {
