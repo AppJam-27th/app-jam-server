@@ -24,8 +24,9 @@ import java.util.List;
 @AllArgsConstructor
 public class FileEntity extends BaseTimeEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id")
-    private String fileId;
+    private Long fileId;
 
     @Column(name = "file_name")
     private String fileName;
