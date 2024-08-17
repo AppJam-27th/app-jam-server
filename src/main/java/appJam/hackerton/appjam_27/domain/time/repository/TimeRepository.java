@@ -9,3 +9,5 @@ import java.util.List;
 public interface TimeRepository extends JpaRepository<TimeEntity, Long> {
     List<TimeEntity> findAllTimeEntityByUserId(UserEntity userEntity);
 }
+
+
