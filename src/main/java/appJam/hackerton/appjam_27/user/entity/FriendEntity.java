@@ -14,20 +14,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tb_user")
+@Table(name = "tb_friend")
 @DynamicUpdate
 @AllArgsConstructor
 public class UserEntity {
-    @Id
+    @ManyToOne(fetch = FetchType.Eager)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "friend_state")
+    private String friendState;
 
-    @Column(name = "user_pw")
-    private String userPwd;
-
-    @Column(name = "user_rank")
-    private Integer userRank;
+    @ManyToOne(fetch = FetchType.Eager) 
+    @Column(name = "user_id2")
+    private Long userId2;
 }
