@@ -19,15 +19,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 public class UserEntity {
     @Id
-    @Column(name = "member_id")
-    private String memberId;
+    @Column(name = "user_id")
+    private String userId;
 
-    @Column(name = "member_name")
-    private String memberName;
+    @Column(name = "user_name")
+    private String userName;
 
-    @Column(name = "member_email")
-    private String memberEmail;
+    @Column(name = "user_pw")
+    private String userPwd;
 
-    @Column(name = "member_password")
-    private String memberPassword;
+    @Column(name = "user_rank")
+    private String userRank;
 }
