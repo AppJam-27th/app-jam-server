@@ -1,6 +1,8 @@
 package appJam.hackerton.appjam_27.domain.user.service;
 
 import appJam.hackerton.appjam_27.domain.user.dto.req.UserReq;
+import appJam.hackerton.appjam_27.domain.user.dto.res.UserRes;
+import appJam.hackerton.appjam_27.domain.user.dto.res.UserSearchRes;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 import appJam.hackerton.appjam_27.domain.file.entity.FileEntity;
 import appJam.hackerton.appjam_27.domain.userToFile.entity.UserToFileEntity;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,11 +45,24 @@ public class UserService {
         userRepository.save(userEntity);
         return Response.of(HttpStatus.OK, "성공");
     }
-
+    public ResponseData<UserRes> read(String userId){
+        UserEntity userEntity = userRepository.findByUserId(userId)
+                .orElseThrow(() -> NotFoundUserException.EXCEPTION);
     public List<UserEntity> search(String username) {
         List<UserEntity> userNm = userRepository.findByUserName(username);
          
         return userNm;
+    }
+
+    public ResponseData<List<UserSearchRes>> search(String userName) {
+        List<UserEntity> result = userRepository.findByUserName(userName);
+
+        List<UserSearchRes> userSearchResList = new ArrayList<>();
+        for (UserEntity userEntity : result){
+            userSearchResList.add(UserSearchRes.of(userEntity));
+        }
+
+        return ResponseData.of(HttpStatus.OK, "성공", userSearchResList);
     }
 
 }

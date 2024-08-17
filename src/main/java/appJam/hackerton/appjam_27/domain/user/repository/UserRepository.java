@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "LEFT JOIN TimeEntity t ON u.userId = t.userId " +
             "GROUP BY u.userId " +
             "ORDER BY SUM(t.userTime) / COUNT(t) DESC")
+            "ORDER BY SUM(t.timeId) / COUNT(t) DESC")
     List<UserEntity> findAllOrderByCalculatedTimeDesc();
 
     List<UserEntity> findByUserName(String username);

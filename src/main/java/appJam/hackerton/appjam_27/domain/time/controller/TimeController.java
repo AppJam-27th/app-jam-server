@@ -20,11 +20,12 @@ public class TimeController {
     @PostMapping()
     public Response saveTime(
             @RequestBody TimeReq timeReq
-            ) {
+    ) {
         return timeService.saveTime(timeReq);
     }
 
     @GetMapping
-    public ResponseData<List<UserEntity>> setTime(){
+    public ResponseData<List<UserEntity>> setTime() {
         return timeService.setTime();
     }
+}
