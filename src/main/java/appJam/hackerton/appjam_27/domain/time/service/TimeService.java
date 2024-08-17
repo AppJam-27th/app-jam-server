@@ -1,25 +1,17 @@
 package appJam.hackerton.appjam_27.domain.time.service;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Dictionary;
-import java.util.List;
-
 import appJam.hackerton.appjam_27.domain.time.dto.req.TimeReq;
 import appJam.hackerton.appjam_27.domain.time.entity.TimeEntity;
 import appJam.hackerton.appjam_27.domain.time.repository.TimeRepository;
-import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
-import appJam.hackerton.appjam_27.global.response.Response;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
+import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
+import appJam.hackerton.appjam_27.global.response.Response;
 import lombok.RequiredArgsConstructor;
-import main.java.appJam.hackerton.appjam_27.domain.time.repository.TimeRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
