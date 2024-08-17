@@ -28,5 +28,3 @@ public class TimeController {
     public ResponseData<List<UserEntity>> setTime(){
         return timeService.setTime();
     }
-
-}
