@@ -1,11 +1,15 @@
 package appJam.hackerton.appjam_27.domain.user.service;
 
+import appJam.hackerton.appjam_27.domain.time.entity.TimeEntity;
+import appJam.hackerton.appjam_27.domain.time.repository.TimeRepository;
 import appJam.hackerton.appjam_27.domain.user.dto.req.UserReq;
+import appJam.hackerton.appjam_27.domain.user.dto.res.UserRes;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
 import appJam.hackerton.appjam_27.global.exception.custom.user.AlreadyExistUser;
 import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
 import appJam.hackerton.appjam_27.global.response.Response;
+import appJam.hackerton.appjam_27.global.response.ResponseData;
 import lombok.RequiredArgsConstructor;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -19,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final TimeRepository timeRepository;
 
     public Response request(UserReq userReq){
 
@@ -39,11 +44,19 @@ public class UserService {
         userRepository.save(userEntity);
         return Response.of(HttpStatus.OK, "성공");
     }
-
+  
     public List<UserEntity> search(String username) {
         List<UserEntity> result = userRepository.findByUserName(username);
 
         return result;
+      
+    public ResponseData<UserRes> read(String userId){
+        UserEntity userEntity = userRepository.findByUserId(userId)
+                .orElseThrow(NotFoundUserException::new);
+
+        List<TimeEntity> timeEntity = timeRepository.findAllTimeEntityByUserId(userEntity);
+
+        return ResponseData.of(HttpStatus.OK, "성공", UserRes.of(userEntity, timeEntity));
     }
 
 }

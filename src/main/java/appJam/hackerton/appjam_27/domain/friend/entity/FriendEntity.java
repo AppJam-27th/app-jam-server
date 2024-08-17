@@ -36,4 +36,8 @@ public class FriendEntity extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id2")
     private UserEntity userEntity2;
+
+    public void setFriendState(FriendState friendState) {
+        this.friendState = friendState;
+    }
 }

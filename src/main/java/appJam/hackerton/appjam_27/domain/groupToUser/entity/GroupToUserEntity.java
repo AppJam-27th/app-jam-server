@@ -23,7 +23,7 @@ public class GroupToUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_to_userId")
-    private Long groupToUser;
+    private Long groupToUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id")
