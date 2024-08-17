@@ -1,12 +1,11 @@
 package appJam.hackerton.appjam_27.domain.user.controller;
 import appJam.hackerton.appjam_27.domain.user.dto.req.UserReq;
+import appJam.hackerton.appjam_27.domain.user.dto.res.UserRes;
 import appJam.hackerton.appjam_27.domain.user.service.UserService;
 import appJam.hackerton.appjam_27.global.response.Response;
+import appJam.hackerton.appjam_27.global.response.ResponseData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,8 +17,13 @@ public class UserController {
     @PostMapping
     public Response request(
             @RequestBody UserReq userReq){
-
         return userService.request(userReq);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseData<UserRes> read(
+            @PathVariable String userId){
+        return userService.read(userId);
     }
 
 }
