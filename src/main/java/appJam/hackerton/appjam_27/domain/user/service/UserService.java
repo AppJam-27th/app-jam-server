@@ -7,8 +7,13 @@ import appJam.hackerton.appjam_27.global.exception.custom.user.AlreadyExistUser;
 import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
 import appJam.hackerton.appjam_27.global.response.Response;
 import lombok.RequiredArgsConstructor;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +38,12 @@ public class UserService {
 
         userRepository.save(userEntity);
         return Response.of(HttpStatus.OK, "성공");
+    }
+
+    public List<UserEntity> search(String username) {
+        List<UserEntity> result = userRepository.findByUserName(username);
+
+        return result;
     }
 
 }
