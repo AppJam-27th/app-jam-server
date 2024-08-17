@@ -47,12 +47,7 @@ public class UserService {
     }
     public ResponseData<UserRes> read(String userId){
         UserEntity userEntity = userRepository.findByUserId(userId)
-                .orElseThrow(() -> NotFoundUserException.EXCEPTION)};
-
-    public List<UserEntity> search(String username) {
-        List<UserEntity> userNm = userRepository.findByUserName(username);
-         
-        return userNm;
+                .orElseThrow(NotFoundUserException.EXCEPTION);
     }
 
     public ResponseData<List<UserSearchRes>> search(String userName) {
