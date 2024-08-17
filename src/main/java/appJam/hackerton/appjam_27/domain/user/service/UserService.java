@@ -1,16 +1,15 @@
 package appJam.hackerton.appjam_27.domain.user.service;
 
-import appJam.hackerton.appjam_27.domain.time.entity.TimeEntity;
-import appJam.hackerton.appjam_27.domain.time.repository.TimeRepository;
 import appJam.hackerton.appjam_27.domain.user.dto.req.UserReq;
 import appJam.hackerton.appjam_27.domain.user.dto.res.UserRes;
 import appJam.hackerton.appjam_27.domain.user.dto.res.UserSearchRes;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
+import appJam.hackerton.appjam_27.domain.file.entity.FileEntity;
+import appJam.hackerton.appjam_27.domain.userToFile.entity.UserToFileEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
 import appJam.hackerton.appjam_27.global.exception.custom.user.AlreadyExistUser;
 import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
 import appJam.hackerton.appjam_27.global.response.Response;
-import appJam.hackerton.appjam_27.global.response.ResponseData;
 import lombok.RequiredArgsConstructor;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -18,6 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final TimeRepository timeRepository;
 
     public Response request(UserReq userReq){
 
@@ -46,14 +45,13 @@ public class UserService {
         userRepository.save(userEntity);
         return Response.of(HttpStatus.OK, "성공");
     }
-      
     public ResponseData<UserRes> read(String userId){
         UserEntity userEntity = userRepository.findByUserId(userId)
                 .orElseThrow(() -> NotFoundUserException.EXCEPTION);
-
-        List<TimeEntity> timeEntity = timeRepository.findAllTimeEntityByUserId(userEntity);
-
-        return ResponseData.of(HttpStatus.OK, "성공", UserRes.of(userEntity, timeEntity));
+    public List<UserEntity> search(String username) {
+        List<UserEntity> userNm = userRepository.findByUserName(username);
+         
+        return userNm;
     }
 
     public ResponseData<List<UserSearchRes>> search(String userName) {
