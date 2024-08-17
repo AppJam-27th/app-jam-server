@@ -22,7 +22,14 @@ public class TimeController {
     private final TimeService timeService;
 
     @GetMapping("/{time}")
-    public ResponseData<Time> saveTime(@PathVariable("time") String time, @PathVariable("uid") Long userId) {
+    public ResponseData<Time> saveTime(@PathVariable("time") String time, @PathVariable("uid") String userId) {
+        Time savedTime = timeService.saveTime(userId, time);
+        // 응답으로 적절히 ResponseData를 리턴해야 합니다.
+        return new ResponseData<Time>(savedTime);
+    }
+
+    @GetMapping("/setRank")
+    public ResponseData<Time> setTime(@PathVariable("time") String time, @PathVariable("uid") String userId) {
         Time savedTime = timeService.saveTime(userId, time);
         // 응답으로 적절히 ResponseData를 리턴해야 합니다.
         return new ResponseData<Time>(savedTime);
