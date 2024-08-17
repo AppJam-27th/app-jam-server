@@ -20,6 +20,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "GROUP BY u.userId " +
             "ORDER BY averageTime DESC")
     List<UserEntity> findAllOrderByCalculatedTimeDesc();
+   
+   
+    @Query("SELECT u, SUM(t.userTime) / COUNT(t) AS averageTime FROM UserEntity u WHERE u.userId = :userId")
+    List<UserEntity> findAllOrderByCalculatedTimeDesc(@Param("userId") Long userId);
 
     List<UserEntity> findByUserName(String username);
 }
