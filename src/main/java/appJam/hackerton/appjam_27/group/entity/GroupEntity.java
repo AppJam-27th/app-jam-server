@@ -1,6 +1,6 @@
-package appJam.hackerton.appjam_27.time.entity;
+package appJam.hackerton.appjam_27.domain.group.entity;
 
-import appJam.hackerton.appjam_27.user.entity.UserEntity;
+import appJam.hackerton.appjam_27.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,22 +15,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tbl_time")
+@Table(name = "tbl_group")
 @DynamicUpdate
 @AllArgsConstructor
-public class TimeEntity {
+public class GroupEntity extends BaseTimeEntity {
     @Id
-    @Column(name = "time_id")
-    private Long timeId;
+    @Column(name = "group_id")
+    private Long groupId;
 
-    @Column(name = "user_time")
-<<<<<<< HEAD
-    private Long userTime;
-=======
-    private Integer userTime;
->>>>>>> 31054b9204b2d7a98ef1f347d863fdbef99e3810
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id")
-    private UserEntity userId;
+    @Column(name = "group_name")
+    private String groupName;
 }
