@@ -19,11 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: make application.yml
-        run: |
-          cd ./src/main/resources
-          touch ./application.yml
-          echo "${{ secrets.APPLICATION }}" > ./application.yml
+      - name: Set yml file
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: /src/main/resources/application.yml
+        env:
+          spring.datasource.url: ${{ secrets.DB_URL }}
+          spring.datasource.username: ${{ secrets.DB_USERNAME }}
+          spring.datasource.password: ${{ secrets.DB_PASSWORD }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -40,8 +43,8 @@ jobs:
       - name: Docker build
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/sopo .
-          docker push ${{ secrets.DOCKER_USERNAME }}/sopo:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/appjam .
+          docker push ${{ secrets.DOCKER_USERNAME }}/appjam:latest
 
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
@@ -55,12 +58,8 @@ jobs:
           script: |
             script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker stop sopo
-            docker rm sopo
-            sudo docker pull redis:latest
-            sudo docker run -d --name redis -p 6379:6379 --network redis-network redis:latest
-            sudo docker rm -f sopo_redis sopo_app
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/sopo:latest
-            docker pull ${{ secrets.DOCKER_USERNAME }}/sopo:latest
-            sudo docker run -d --name sopo_redis_new redis:latest
-            docker run -d -p 80:8080 --name sopo ${{ secrets.DOCKER_USERNAME }}/sopo:latest
+            docker stop appjam
+            docker rm appjam
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/appjam:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/appjam:latest
+            docker run -d -p 80:8080 --name appjam ${{ secrets.DOCKER_USERNAME }}/appjam:latest
