@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/time")
 @RequiredArgsConstructor
 public class TimeController {
+
     private final TimeService timeService;
 
     @PostMapping()
@@ -21,4 +22,5 @@ public class TimeController {
             ) {
         return timeService.saveTime(timeReq);
     }
+
 }

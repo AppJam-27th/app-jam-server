@@ -7,7 +7,7 @@ spring:
 
   jpa:
    hibernate:
-     ddl-auto: create
+     ddl-auto: none
      dialect: org.hibernate.dialect.PostgreSQLDialect
    properties:
      hibernate:
