@@ -2,6 +2,7 @@ package appJam.hackerton.appjam_27.domain.user.service;
 
 import appJam.hackerton.appjam_27.domain.user.dto.req.UserReq;
 import appJam.hackerton.appjam_27.domain.user.entity.UserEntity;
+import appJam.hackerton.appjam_27.domain.file.entity.FileEntity;
 import appJam.hackerton.appjam_27.domain.user.repository.UserRepository;
 import appJam.hackerton.appjam_27.global.exception.custom.user.AlreadyExistUser;
 import appJam.hackerton.appjam_27.global.exception.custom.user.NotFoundUserException;
@@ -13,6 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -41,8 +43,8 @@ public class UserService {
     }
 
     public List<UserEntity> search(String username) {
-        List<UserEntity> result = userRepository.findByUserName(username);
-
+        List<UserEntity> userNm = userRepository.findByUserName(username);
+        List<FileEntity> 
         return result;
     }
 

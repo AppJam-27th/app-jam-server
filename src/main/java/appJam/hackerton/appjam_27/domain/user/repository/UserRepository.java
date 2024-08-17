@@ -17,12 +17,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT u FROM UserEntity u " +
             "LEFT JOIN TimeEntity t ON u.userId = t.userId " +
             "GROUP BY u.userId " +
-            "ORDER BY SUM(t.user_time) / COUNT(t) DESC")
+            "ORDER BY SUM(t.userTime) / COUNT(t) DESC")
     List<UserEntity> findAllOrderByCalculatedTimeDesc();
 
-<<<<<<< HEAD
     List<UserEntity> findByUserName(String username);
 }
-=======
-}
->>>>>>> 6507f834dd22652fbc1578e79fe9c8c8b1122efa
