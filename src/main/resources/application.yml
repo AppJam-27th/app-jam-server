@@ -1,31 +1,18 @@
 spring:
   datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: ${DB_URL}
-#    username: ${DB_USERNAME}
-#    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/appjam
-    username: root
-    password: 12345678
+   driver-class-name: org.postgresql.Driver
+   url: ${DB_URL}
+   username: ${DB_USERNAME}
+   password: ${DB_PASSWORD}
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#      dialect: org.hibernate.dialect.PostgreSQLDialect
-#    properties:
-#      hibernate:
-#        default_batch_fetch_size: 100
-#        format_sql: true
-
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none #none, create, update
-      show-sql: true # DDL ??
-    properties:
-      hibernate:
-        format_sql: true
+ jpa:
+   hibernate:
+     ddl-auto: create
+     dialect: org.hibernate.dialect.PostgreSQLDialect
+   properties:
+     hibernate:
+       default_batch_fetch_size: 100
+       format_sql: true
 
   server:
     port: 8080
