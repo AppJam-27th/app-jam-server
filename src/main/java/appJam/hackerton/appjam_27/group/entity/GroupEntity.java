@@ -1,4 +1,4 @@
-package appJam.hackerton.appjam_27.user.entity;
+package appJam.hackerton.appjam_27.group.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -14,10 +14,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tb_group")
+@Table(name = "tbl_group")
 @DynamicUpdate
 @AllArgsConstructor
-public class UserEntity {
+public class GroupEntity {
     @Id
     @Column(name = "group_id")
     private Long groupId;

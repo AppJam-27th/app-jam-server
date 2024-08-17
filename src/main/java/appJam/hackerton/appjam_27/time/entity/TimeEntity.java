@@ -1,6 +1,6 @@
+package appJam.hackerton.appjam_27.time.entity;
 
-package appJam.hackerton.appjam_27.user.entity;
-
+import appJam.hackerton.appjam_27.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,22 +15,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tb_group")
+@Table(name = "tbl_time")
 @DynamicUpdate
 @AllArgsConstructor
-public class UserEntity {
+public class TimeEntity {
     @Id
-    @Column(name = "file_id")
-    private String fileId;
+    @Column(name = "time_id")
+    private Long timeId;
 
-    @ManyToOne(fetch = FetchType.Eager) 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_time")
+    private Integer userTime;
 
-    @Column(name = "file_name")
-    private String fileName;
-
-    @Column(name = "file_size")
-    private String fileSize;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id")
+    private UserEntity userId;
 }
-

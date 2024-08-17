@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tb_user")
+@Table(name = "tbl_user")
 @DynamicUpdate
 @AllArgsConstructor
 public class UserEntity {

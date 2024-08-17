@@ -1,5 +1,7 @@
-package appJam.hackerton.appjam_27.user.entity;
+package appJam.hackerton.appjam_27.groupToUser.entity;
 
+import appJam.hackerton.appjam_27.group.entity.GroupEntity;
+import appJam.hackerton.appjam_27.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,19 +16,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tb_groupToUser")
+@Table(name = "tbl_group_to_user")
 @DynamicUpdate
 @AllArgsConstructor
-public class UserEntity {
+public class GroupToUserEntity {
     @Id
     @Column(name = "group_to_userId")
     private Long groupToUser;
 
-    @ManyToOne(fetch = FetchType.Eager)
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id")
+    private UserEntity userId;
 
-    @ManyToOne(fetch = FetchType.Eager)
-    @Column(name = "group_id")
-    private Long groupId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_group_id")
+    private GroupEntity groupId;
 }
