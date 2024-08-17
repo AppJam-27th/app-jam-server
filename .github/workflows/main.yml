@@ -22,7 +22,7 @@ jobs:
       - name: Set yml file
         uses: microsoft/variable-substitution@v1
         with:
-          files: 27th-appjam/src/main/resource/application.yml
+          files: ./application.yml
         env:
           spring.datasource.url: ${{ secrets.DB_URL }}
           spring.datasource.username: ${{ secrets.DB_USERNAME }}
